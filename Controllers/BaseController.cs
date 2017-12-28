@@ -47,6 +47,7 @@ namespace giftideas.Controllers
                 return BadRequest();
             }
 
+            item.Created = DateTime.Now;
             _dbsetGetter(_context).Add(item);
             _context.SaveChanges();
 
