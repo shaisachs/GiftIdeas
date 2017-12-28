@@ -22,9 +22,12 @@ namespace giftideas.Controllers
             _getSingularRouteName = getSingularRouteName;
         }
 
-        public virtual IEnumerable<T> GetAll()
+        public virtual BaseModelCollection<T> GetAll()
         {
-            return _dbsetGetter(_context).ToList();
+            var items = _dbsetGetter(_context).ToList();
+            var answer = new BaseModelCollection<T>() { Items = items };
+
+            return answer;
         }
 
         public virtual IActionResult GetById(long id)

@@ -17,7 +17,7 @@ namespace giftideas.Controllers
         }
         
         [HttpGet]
-        public override IEnumerable<Recipient> GetAll()
+        public override BaseModelCollection<Recipient> GetAll()
         {
             return base.GetAll();
         }
