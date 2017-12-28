@@ -12,17 +12,14 @@ namespace giftideas.Controllers
         private readonly GiftIdeasContext _context;
         private readonly Func<GiftIdeasContext, DbSet<T>> _dbsetGetter;
         private readonly string _getSingularRouteName;
-        private readonly Func<T, T, T> _existingItemUpdater;
 
         public BaseController(GiftIdeasContext context, 
             Func<GiftIdeasContext, DbSet<T>> dbsetGetter,
-            string getSingularRouteName,
-            Func<T, T, T> existingItemUpdater)
+            string getSingularRouteName)
         {
             _context = context;
             _dbsetGetter = dbsetGetter;
             _getSingularRouteName = getSingularRouteName;
-            _existingItemUpdater = existingItemUpdater;
         }
 
         public virtual IEnumerable<T> GetAll()
@@ -66,7 +63,7 @@ namespace giftideas.Controllers
                 return NotFound();
             }
 
-            existingItem = _existingItemUpdater(existingItem, newItem);
+            existingItem = UpdateExistingItem(existingItem, newItem);
 
             _dbsetGetter(_context).Update(existingItem);
             _context.SaveChanges();
@@ -84,6 +81,8 @@ namespace giftideas.Controllers
             _dbsetGetter(_context).Remove(existingItem);
             _context.SaveChanges();
             return new NoContentResult();
-        }        
+        }
+
+        protected abstract T UpdateExistingItem(T existingItem, T newItem);
     }
 }

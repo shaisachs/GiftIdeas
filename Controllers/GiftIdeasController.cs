@@ -6,36 +6,36 @@ using System.Linq;
 namespace giftideas.Controllers
 {
     [Route("api/v1/[controller]")]
-    public class HolidaysController : BaseController<Holiday>
+    public class GiftIdeasController : BaseController<GiftIdea>
     {
         private readonly GiftIdeasContext _context;
 
-        public HolidaysController(GiftIdeasContext context)
-            : base(context, (c) => c.Holidays, "GetHoliday")
+        public GiftIdeasController(GiftIdeasContext context)
+            : base(context, (c) => c.GiftIdeas, "GetGiftIdea")
         {
             _context = context;
         }
         
         [HttpGet]
-        public override IEnumerable<Holiday> GetAll()
+        public override IEnumerable<GiftIdea> GetAll()
         {
             return base.GetAll();
         }
 
-        [HttpGet("{id}", Name = "GetHoliday")]
+        [HttpGet("{id}", Name = "GetGiftIdea")]
         public override IActionResult GetById(long id)
         {
             return base.GetById(id);
         }
 
         [HttpPost]
-        public override IActionResult Create([FromBody] Holiday item)
+        public override IActionResult Create([FromBody] GiftIdea item)
         {
             return base.Create(item);
         }
 
         [HttpPut("{id}")]
-        public override IActionResult Update(long id, [FromBody] Holiday newItem)
+        public override IActionResult Update(long id, [FromBody] GiftIdea newItem)
         {
             return base.Update(id, newItem);
         }
@@ -45,14 +45,15 @@ namespace giftideas.Controllers
         {
             return base.Delete(id);
         }
-        
-        protected override Holiday UpdateExistingItem(Holiday existingItem, Holiday newItem) 
+
+        protected override GiftIdea UpdateExistingItem(GiftIdea existingItem, GiftIdea newItem) 
         {
-            existingItem.Name = newItem.Name;
-            existingItem.Month = newItem.Month;
-            existingItem.Day = newItem.Day;
+            existingItem.GiftDescription = newItem.GiftDescription;
+            existingItem.HolidayId = newItem.HolidayId;
+            existingItem.RecipientId = newItem.RecipientId;
 
             return existingItem;
         }
+
     }
 }

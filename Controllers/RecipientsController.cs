@@ -11,7 +11,7 @@ namespace giftideas.Controllers
         private readonly GiftIdeasContext _context;
 
         public RecipientsController(GiftIdeasContext context)
-            : base(context, (c) => c.Recipients, "GetRecipient", (h1, h2) => h2)
+            : base(context, (c) => c.Recipients, "GetRecipient")
         {
             _context = context;
         }
@@ -44,6 +44,12 @@ namespace giftideas.Controllers
         public override IActionResult Delete(long id)
         {
             return base.Delete(id);
+        }
+
+        protected override Recipient UpdateExistingItem(Recipient existingItem, Recipient newItem) 
+        {
+            existingItem.Name = newItem.Name;
+            return existingItem;
         }        
     }
 }
