@@ -2,9 +2,8 @@ using System;
 
 namespace giftideas.Models
 {
-    public class GiftIdea
+    public class GiftIdea : BaseModel
     {
-        public long Id { get; set; }
         public long HolidayId { get; set; }
 
         public virtual Holiday Holiday { get; set; }

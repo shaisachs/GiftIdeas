@@ -1,8 +1,7 @@
 namespace giftideas.Models
 {
-    public class Recipient
+    public class Recipient : BaseModel
     {
-        public long Id { get; set; }
-        public string Name { get; set; }
+                public string Name { get; set; }
     }
 }
