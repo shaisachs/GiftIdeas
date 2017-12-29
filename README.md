@@ -38,7 +38,7 @@ POST /api/v1/giftIdeas
 The `giftIdeas` collection may be optionally queried by holiday or recipient:
 
 ```
-GET /api/v1/giftIdeas?holiday=123&recipientId=456
+GET /api/v1/giftIdeas?holidayId=123&recipientId=456
 
 200 OK
 {
