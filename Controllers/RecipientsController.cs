@@ -2,10 +2,12 @@ using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using giftideas.Models;
 using System.Linq;
+using Microsoft.AspNetCore.Authorization;
 
 namespace giftideas.Controllers
 {
     [Route("api/v1/[controller]")]
+    [Authorize(AuthenticationSchemes = "RapidApi")]
     public class RecipientsController : BaseController<Recipient>
     {
         private readonly GiftIdeasContext _context;

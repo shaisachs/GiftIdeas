@@ -26,6 +26,7 @@ namespace giftideas
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
+            services.AddAuthentication().AddRapidApiAuthentication();
             services.AddDbContext<GiftIdeasContext>(opt => opt.UseInMemoryDatabase("GiftIdeasList"));
             services.AddMvc();
         }
@@ -33,6 +34,8 @@ namespace giftideas
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IHostingEnvironment env)
         {
+            app.UseAuthentication();
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
