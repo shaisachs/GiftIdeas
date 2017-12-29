@@ -32,7 +32,7 @@ namespace giftideas.Auth
                 return AuthenticateResult.NoResult();
             }
 
-            if (!providedSecret.Equals(RapidApiCorrectSecret))
+            if (!await Task.Run(() => IsCorrectSecret(providedSecret)))
             {
                 return AuthenticateResult.NoResult();
             }
@@ -47,6 +47,11 @@ namespace giftideas.Auth
             var principal = new ClaimsPrincipal(new ClaimsIdentity(claims, Scheme.Name));
             var ticket = new AuthenticationTicket(principal, null, Scheme.Name);
             return AuthenticateResult.Success(ticket);
+        }
+
+        protected bool IsCorrectSecret(string providedSecret) 
+        {
+            return !string.IsNullOrEmpty(providedSecret) && providedSecret.Equals(RapidApiCorrectSecret);
         }
     }
 }
