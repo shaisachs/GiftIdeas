@@ -24,7 +24,7 @@ namespace giftideas.Controllers
 
         public virtual BaseModelCollection<T> GetAll()
         {
-            var items = _dbsetGetter(_context).ToList();
+            var items = _dbsetGetter(_context).Where(t => IsOwnedByCurrentUser(t)).ToList();
             var answer = new BaseModelCollection<T>() { Items = items };
 
             return answer;
@@ -32,11 +32,13 @@ namespace giftideas.Controllers
 
         public virtual IActionResult GetById(long id)
         {
-            var item = _dbsetGetter(_context).FirstOrDefault(t => t.Id == id);
+            var item = GetSingleItem(id);
+
             if (item == null)
             {
                 return NotFound();
             }
+            
             return new ObjectResult(item);
         }
 
@@ -48,6 +50,8 @@ namespace giftideas.Controllers
             }
 
             item.Created = DateTime.Now;
+            item.Creator = CurrentUserName();
+
             _dbsetGetter(_context).Add(item);
             _context.SaveChanges();
 
@@ -61,7 +65,8 @@ namespace giftideas.Controllers
                 return BadRequest();
             }
 
-            var existingItem = _dbsetGetter(_context).FirstOrDefault(t => t.Id == id);
+            var existingItem = GetSingleItem(id);
+
             if (existingItem == null)
             {
                 return NotFound();
@@ -76,7 +81,7 @@ namespace giftideas.Controllers
 
         public virtual IActionResult Delete(long id)
         {
-            var existingItem = _dbsetGetter(_context).FirstOrDefault(t => t.Id == id);
+            var existingItem = GetSingleItem(id);
             if (existingItem == null)
             {
                 return NotFound();
@@ -88,5 +93,21 @@ namespace giftideas.Controllers
         }
 
         protected abstract T UpdateExistingItem(T existingItem, T newItem);
+
+        protected T GetSingleItem(long id)
+        {
+            return _dbsetGetter(_context).FirstOrDefault(t => t.Id == id && IsOwnedByCurrentUser(t));
+        }
+
+        protected bool IsOwnedByCurrentUser(T item)
+        {
+            return !string.IsNullOrEmpty(item.Creator) &&
+                item.Creator.Equals(CurrentUserName());
+        }
+
+        protected string CurrentUserName()
+        {
+            return this.User.Identity.Name;
+        }
     }
 }

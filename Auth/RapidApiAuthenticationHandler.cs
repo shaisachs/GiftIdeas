@@ -21,25 +21,29 @@ namespace giftideas.Auth
             : base(options, logger, encoder, clock) { }
 
         private const string RapidApiSecretHeaderName = "X-Mashape-Proxy-Secret";
+        private const string RapidApiUsernameHeaderName = "X-Mashape-User";
         private const string RapidApiCorrectSecret = "1234";
 
         protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
         {
-            string providedSecret = Request.Headers[RapidApiSecretHeaderName];
+            var providedSecret = Request.Headers[RapidApiSecretHeaderName];
             if (string.IsNullOrEmpty(providedSecret))
             {
                 return AuthenticateResult.NoResult();
             }
 
-            if (string.IsNullOrEmpty(providedSecret) || !providedSecret.Equals(RapidApiCorrectSecret))
+            if (!providedSecret.Equals(RapidApiCorrectSecret))
             {
                 return AuthenticateResult.NoResult();
             }
 
-            // todo: replace with rapidapi username header
-            string userId = "RapidApi";
+            var username = Request.Headers[RapidApiUsernameHeaderName];
+            if (string.IsNullOrEmpty(providedSecret))
+            {
+                return AuthenticateResult.NoResult();
+            }
 
-            var claims = new[] { new Claim(ClaimTypes.Name, userId, ClaimValueTypes.String, ClaimsIssuer) };
+            var claims = new[] { new Claim(ClaimTypes.Name, username, ClaimValueTypes.String, ClaimsIssuer) };
             var principal = new ClaimsPrincipal(new ClaimsIdentity(claims, Scheme.Name));
             var ticket = new AuthenticationTicket(principal, null, Scheme.Name);
             return AuthenticateResult.Success(ticket);
