@@ -8,20 +8,30 @@ using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Microsoft.Net.Http.Headers;
+using System.Configuration;
+using Microsoft.Extensions.Configuration;
 
 namespace giftideas.Auth
 {
     public class RapidApiAuthenticationHandler : AuthenticationHandler<AuthenticationSchemeOptions>
     {
+        private IConfiguration _configuration { get; set; }
+
         public RapidApiAuthenticationHandler(
+            IConfiguration configuration,
             IOptionsMonitor<AuthenticationSchemeOptions> options,
             ILoggerFactory logger,
             UrlEncoder encoder,
             ISystemClock clock)
-            : base(options, logger, encoder, clock) { }
+            : base(options, logger, encoder, clock)
+        {
+            _configuration = configuration;
+        }
 
         private const string RapidApiSecretHeaderName = "X-Mashape-Proxy-Secret";
         private const string RapidApiUsernameHeaderName = "X-Mashape-User";
+        private const string RapidApiConfigSetting = "RapidApiSecret";
+
         private const string RapidApiCorrectSecret = "1234";
 
         protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
@@ -52,6 +62,11 @@ namespace giftideas.Auth
         protected bool IsCorrectSecret(string providedSecret) 
         {
             return !string.IsNullOrEmpty(providedSecret) && providedSecret.Equals(RapidApiCorrectSecret);
+        }
+
+        private string GetCorrectRapidApiSecret()
+        {
+            return _configuration[RapidApiConfigSetting];
         }
     }
 }
