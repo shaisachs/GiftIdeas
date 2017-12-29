@@ -22,9 +22,13 @@ namespace giftideas.Controllers
             _getSingularRouteName = getSingularRouteName;
         }
 
-        public virtual BaseModelCollection<T> GetAll()
+        public virtual BaseModelCollection<T> GetAll(Func<T, bool> additionalFilter = null)
         {
-            var items = _dbsetGetter(_context).Where(t => IsOwnedByCurrentUser(t)).ToList();
+            Func<T, bool> predicate =
+                (t) => IsOwnedByCurrentUser(t) &&
+                    (additionalFilter == null ? true : additionalFilter(t));
+
+            var items = _dbsetGetter(_context).Where(predicate).ToList();
             var answer = new BaseModelCollection<T>() { Items = items };
 
             return answer;
@@ -38,7 +42,7 @@ namespace giftideas.Controllers
             {
                 return NotFound();
             }
-            
+
             return new ObjectResult(item);
         }
 

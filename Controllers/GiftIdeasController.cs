@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
 using giftideas.Models;
@@ -19,9 +20,13 @@ namespace giftideas.Controllers
         }
         
         [HttpGet]
-        public override BaseModelCollection<GiftIdea> GetAll()
+        public BaseModelCollection<GiftIdea> GetAll(long? holidayId = null, long? recipientId = null)
         {
-            return base.GetAll();
+            Func<GiftIdea, bool> additionalFilter = (t) =>
+                (holidayId.HasValue ? t.HolidayId == holidayId.Value : true) &&
+                (recipientId.HasValue ? t.RecipientId == recipientId.Value : true);
+
+            return base.GetAll(additionalFilter: additionalFilter);
         }
 
         [HttpGet("{id}", Name = "GetGiftIdea")]
