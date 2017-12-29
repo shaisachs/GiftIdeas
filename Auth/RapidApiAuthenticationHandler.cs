@@ -32,8 +32,6 @@ namespace giftideas.Auth
         private const string RapidApiUsernameHeaderName = "X-Mashape-User";
         private const string RapidApiConfigSetting = "RapidApiSecret";
 
-        private const string RapidApiCorrectSecret = "1234";
-
         protected override async Task<AuthenticateResult> HandleAuthenticateAsync()
         {
             var providedSecret = Request.Headers[RapidApiSecretHeaderName];
@@ -61,7 +59,7 @@ namespace giftideas.Auth
 
         protected bool IsCorrectSecret(string providedSecret) 
         {
-            return !string.IsNullOrEmpty(providedSecret) && providedSecret.Equals(RapidApiCorrectSecret);
+            return !string.IsNullOrEmpty(providedSecret) && providedSecret.Equals(GetCorrectRapidApiSecret());
         }
 
         private string GetCorrectRapidApiSecret()
