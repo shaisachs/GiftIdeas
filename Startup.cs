@@ -32,9 +32,11 @@ namespace giftideas
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddAuthentication().AddRapidApiAuthentication();
-            services.AddDbContext<GiftIdeasContext>(opt => opt.UseInMemoryDatabase("GiftIdeasList"));
+
+            services.AddDbContext<GiftIdeasContext>(options => options.UseSqlServer(connection));
+
             services.AddMvc();
-           services.AddSingleton<IConfiguration>(Configuration);
+            services.AddSingleton<IConfiguration>(Configuration);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
