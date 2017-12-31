@@ -1,5 +1,5 @@
 
-- [ ] Add Swagger doc
+- [x] Add Swagger doc
 - [x] Backed by real db - connection string
 - [x] EF migrations
 - [ ] DTOs - remove creator

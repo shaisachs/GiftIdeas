@@ -2,7 +2,7 @@
 
 An API which you can use to make note of gift ideas throughout the year - to make buying gifts much easier!
 
-Basic CRUD functionality on all resources is supported. Authentication uses RapidAPI headers.
+Basic CRUD functionality on all resources is supported. Authentication uses RapidAPI headers. Full Swagger doc at /swagger.
 
 ## Holidays
 

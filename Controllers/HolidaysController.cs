@@ -21,31 +21,31 @@ namespace giftideas.Controllers
         [HttpGet]
         public BaseModelCollection<Holiday> GetAll()
         {
-            return base.GetAll();
+            return base.GetAllBase();
         }
 
         [HttpGet("{id}", Name = "GetHoliday")]
-        public override IActionResult GetById(long id)
+        public IActionResult GetById(long id)
         {
-            return base.GetById(id);
+            return base.GetByIdBase(id);
         }
 
         [HttpPost]
-        public override IActionResult Create([FromBody] Holiday item)
+        public IActionResult Create([FromBody] Holiday item)
         {
-            return base.Create(item);
+            return base.CreateBase(item);
         }
 
         [HttpPut("{id}")]
-        public override IActionResult Update(long id, [FromBody] Holiday newItem)
+        public IActionResult Update(long id, [FromBody] Holiday newItem)
         {
-            return base.Update(id, newItem);
+            return base.UpdateBase(id, newItem);
         }
 
         [HttpDelete("{id}")]
-        public override IActionResult Delete(long id)
+        public IActionResult Delete(long id)
         {
-            return base.Delete(id);
+            return base.DeleteBase(id);
         }
         
         protected override Holiday UpdateExistingItem(Holiday existingItem, Holiday newItem) 

@@ -22,7 +22,7 @@ namespace giftideas.Controllers
             _getSingularRouteName = getSingularRouteName;
         }
 
-        public virtual BaseModelCollection<T> GetAll(Func<T, bool> additionalFilter = null)
+        protected BaseModelCollection<T> GetAllBase(Func<T, bool> additionalFilter = null)
         {
             Func<T, bool> predicate =
                 (t) => IsOwnedByCurrentUser(t) &&
@@ -34,7 +34,7 @@ namespace giftideas.Controllers
             return answer;
         }
 
-        public virtual IActionResult GetById(long id)
+        protected IActionResult GetByIdBase(long id)
         {
             var item = GetSingleItem(id);
 
@@ -46,7 +46,7 @@ namespace giftideas.Controllers
             return new ObjectResult(item);
         }
 
-        public virtual IActionResult Create(T item)
+        protected IActionResult CreateBase(T item)
         {
             if (item == null)
             {
@@ -62,7 +62,7 @@ namespace giftideas.Controllers
             return CreatedAtRoute(_getSingularRouteName, new { id = item.Id }, item);
         }
 
-        public virtual IActionResult Update(long id, T newItem)
+        protected IActionResult UpdateBase(long id, T newItem)
         {
             if (newItem == null || newItem.Id != id)
             {
@@ -83,7 +83,7 @@ namespace giftideas.Controllers
             return new NoContentResult();
         }
 
-        public virtual IActionResult Delete(long id)
+        protected IActionResult DeleteBase(long id)
         {
             var existingItem = GetSingleItem(id);
             if (existingItem == null)

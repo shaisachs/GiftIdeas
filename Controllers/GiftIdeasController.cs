@@ -19,6 +19,12 @@ namespace giftideas.Controllers
             _context = context;
         }
         
+        [HttpGet("{id}", Name = "GetGiftIdea")]
+        public IActionResult GetById(long id)
+        {
+            return base.GetByIdBase(id);
+        }
+
         [HttpGet]
         public BaseModelCollection<GiftIdea> GetAll(long? holidayId = null, long? recipientId = null)
         {
@@ -26,31 +32,25 @@ namespace giftideas.Controllers
                 (holidayId.HasValue ? t.HolidayId == holidayId.Value : true) &&
                 (recipientId.HasValue ? t.RecipientId == recipientId.Value : true);
 
-            return base.GetAll(additionalFilter: additionalFilter);
-        }
-
-        [HttpGet("{id}", Name = "GetGiftIdea")]
-        public override IActionResult GetById(long id)
-        {
-            return base.GetById(id);
+            return base.GetAllBase(additionalFilter: additionalFilter);
         }
 
         [HttpPost]
-        public override IActionResult Create([FromBody] GiftIdea item)
+        public IActionResult Create([FromBody] GiftIdea item)
         {
-            return base.Create(item);
+            return base.CreateBase(item);
         }
 
         [HttpPut("{id}")]
-        public override IActionResult Update(long id, [FromBody] GiftIdea newItem)
+        public IActionResult Update(long id, [FromBody] GiftIdea newItem)
         {
-            return base.Update(id, newItem);
+            return base.UpdateBase(id, newItem);
         }
 
         [HttpDelete("{id}")]
-        public override IActionResult Delete(long id)
+        public IActionResult Delete(long id)
         {
-            return base.Delete(id);
+            return base.DeleteBase(id);
         }
 
         protected override GiftIdea UpdateExistingItem(GiftIdea existingItem, GiftIdea newItem) 
