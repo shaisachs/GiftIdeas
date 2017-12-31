@@ -1,7 +1,7 @@
 
 - [ ] Add Swagger doc
-- [ ] Backed by real db - connection string
-- [ ] EF migrations
+- [x] Backed by real db - connection string
+- [x] EF migrations
 - [ ] DTOs - remove creator
 - [ ] validation (valid holiday, recipient, max length)
 - [ ] service / repository layer
