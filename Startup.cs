@@ -33,7 +33,7 @@ namespace giftideas
         {
             services.AddAuthentication().AddRapidApiAuthentication();
 
-            var connection = Config.GetConnectionString(“defaultConnection”);
+            var connection = Configuration.GetConnectionString("defaultConnection");
             services.AddDbContext<GiftIdeasContext>(options => options.UseSqlServer(connection));
 
             services.AddMvc();
