@@ -1,4 +1,4 @@
-# BikeTheT
+# Gift Ideas API
 
 An API which you can use to make note of gift ideas throughout the year - to make buying gifts much easier!
 
