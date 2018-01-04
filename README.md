@@ -1,6 +1,6 @@
 # Gift Ideas API
 
-An API which you can use to make note of gift ideas throughout the year - to make buying gifts much easier!
+An API which you can use to make note of gift ideas throughout the year - to make buying gifts much easier. [Check it out on Mashape!](https://market.mashape.com/shaisachs/gift-ideas/)
 
 Basic CRUD functionality on all resources is supported. Authentication uses RapidAPI headers. Full Swagger doc at /swagger.
 
