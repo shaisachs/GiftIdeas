@@ -2,9 +2,13 @@
 
 An API which you can use to make note of gift ideas throughout the year - to make buying gifts much easier. [Check it out on Mashape!](https://market.mashape.com/shaisachs/gift-ideas/)
 
-Basic CRUD functionality on all resources is supported. Authentication uses RapidAPI headers. Full Swagger doc at /swagger. Read more about this project on [my blog](https://shaisachs.github.io/2018/01/03/gift-ideas-crud-aspnet-core2-rapidapi.html?src=github)!
+Basic CRUD functionality on all resources is supported. Authentication uses RapidAPI headers. Read more about this project on [my blog](https://shaisachs.github.io/2018/01/03/gift-ideas-crud-aspnet-core2-rapidapi.html?src=github)!
 
-## Holidays
+## APIs
+
+The following is a synopsis; check out the [full Swagger documentation](https://giftideasapi.azurewebsites.net/swagger).
+
+### Holidays
 
 ```
 POST /api/v1/holidays
@@ -15,7 +19,7 @@ POST /api/v1/holidays
 }
 ```
 
-## Recipients
+### Recipients
 
 ```
 POST /api/v1/recipients
@@ -24,7 +28,7 @@ POST /api/v1/recipients
 }
 ```
 
-## GiftIdeas
+### GiftIdeas
 
 ```
 POST /api/v1/giftIdeas
